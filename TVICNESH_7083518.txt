@@ -1,0 +1,454 @@
+
+public class Question1 {
+	public static void main(String[] argv) {
+		// printNumbers(21, 29, 4);
+		printNumbers(4, 12, 6);
+		System.out.println();
+		System.out.println(hasDuplicateChars("abca1a2"));// will produce true.
+		System.out.println(hasDuplicateChars("morning"));// will produce true.
+		System.out.println(hasDuplicateChars("ab$wx$y"));// will produce true.
+		System.out.println(hasDuplicateChars("35 x 12"));// will produce true.
+		System.out.println(hasDuplicateChars("methods"));// will produce false.
+		System.out.println();
+		System.out.println(replaceWith("programming", 'r', 'R'));
+		System.out.println(replaceWith("java", 'a', 'A'));
+		System.out.println(replaceWith("1+2x3+4", '+', '%'));
+		System.out.println(replaceWith("22 Jun 2022", ' ', '-'));
+		System.out.println();
+		System.out.println(countDigit(5, 0));
+		System.out.println(countDigit(1, 1));
+		System.out.println(countDigit(12257212, 2));
+		System.out.println(countDigit(51299189, 9));
+	}
+
+	public static void printNumbers(int startNum, int endNum, int numPerLine) {
+		int count = 0;
+		for (int i = startNum; i <= endNum; i++) {
+			if (count >= numPerLine) {
+				count = 1;
+				System.out.println();
+				System.out.print(i + " ");
+			} else {
+				System.out.print(i + " ");
+				count = count + 1;
+			}
+		}
+	}
+
+	public static boolean hasDuplicateChars(String data) {
+
+		for (int i = 0; i < data.length(); i++)
+			for (int j = i + 1; j < data.length(); j++)
+				if (data.charAt(i) == data.charAt(j))
+					return true;
+		return false;
+	}
+
+	public static String replaceWith(String data, char ch1, char ch2) {
+		if (data.length() == 1) {
+			return data;
+		}
+		char A = data.charAt(0);
+		if (data.charAt(0) == ch1) {
+			A = ch2;
+			data = ch2 + data.substring(1);
+		}
+		return A + replaceWith(data.substring(1), ch1, ch2);
+	}
+
+	public static int countDigit(int number, int digit) {
+		if (number == 0)
+			return 0;
+
+		int d = number % 10;
+		if (d == digit)
+			return 1 + countDigit(number / 10, digit);
+
+		return countDigit(number / 10, digit);
+	}
+}
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Question2 {
+ public static void main(String[] argv){
+	 Scanner myObj = new Scanner(System.in);
+	 ArrayList<ProjMember> list = new ArrayList<>();
+	 ArrayList<ProjTeam> list1 = new ArrayList<>();
+	 int option=0;
+	 do {
+	 System.out.println("WELCOME TO MAIN MENU");
+	 System.out.println("PRESS 1 TO ADD MEMBER");
+	 System.out.println("PRESS 2 TO Remove MEMBER");
+	 System.out.println("PRESS 3 TO ADD Project Team");
+	 System.out.println("PRESS 4 TO ADD MEMBER to project team");
+	 System.out.println("PRESS 5 TO remove MEMBER from project team");
+	 System.out.println("Press 6 to print all teams");
+	 System.out.println("Press 7 to Quite");
+	 option=myObj.nextInt();
+	 if(option==1) 
+	 {
+		 int ID; String name, email;
+		 System.out.println("Enter Member ID");
+		 ID=myObj.nextInt();
+		 myObj.nextLine();
+		 System.out.println("Enter Member Name");
+		 name=myObj.nextLine();
+		 System.out.println("Enter Member Email");
+		 email=myObj.nextLine();
+		 ProjMember obj= new ProjMember(ID,name,email);
+		 if(list.contains(ID)) 
+		 {
+			 System.out.println("Member Already Exist please enter unique details");
+		 }
+		 else {
+			 list.add(obj);
+		 }
+	 }
+	 else 
+	 {
+		 if(option==2) 
+		 {
+			 int ID;
+			 System.out.println("Enter Member ID");
+			 ID=myObj.nextInt(); 
+			 if(list.contains(ID)) 
+			 {
+				 list.remove(ID);  
+			 }
+			 else 
+			 {
+				 System.out.println("No data Matched for ID");
+			 }
+			 
+		 }
+		 else 
+		 {
+			 if(option==3) 
+			 {
+				 String name;
+				 myObj.nextLine();
+				 System.out.println("Enter Team Name");
+				 name=myObj.nextLine();
+				 ProjTeam obj= new ProjTeam(name);
+				 if(list1.contains(obj)) 
+				 {
+					 System.out.println("Team Already Exist"); 
+				 }
+				 else {
+				 list1.add(obj);
+				 }
+			 }
+			 else {
+				 if(option==4) 
+				 {
+					 int ID; String name;
+					 System.out.println("Enter Member ID");
+					 ID=myObj.nextInt();
+					 myObj.nextLine();
+					 System.out.println("Enter Team Name");
+					 name=myObj.nextLine();
+					 if(list.contains(ID) && list1.contains(name)) 
+					 {
+						 ProjTeam obj= new ProjTeam();
+						 obj.member.add(list.get(ID));
+					 }
+					 else 
+					 {
+						 System.out.print("Data not matched");
+					 }
+				 }
+				 else {
+					 if(option==5) 
+					 {
+						 int ID; String name;
+						 System.out.println("Enter Member ID");
+						 ID=myObj.nextInt();
+						 myObj.nextLine();
+						 System.out.println("Enter Team Name");
+						 name=myObj.nextLine();
+						 if(list.contains(ID) && list1.contains(name)) 
+						 {
+							 ProjTeam obj= new ProjTeam();
+							 obj.member.remove(list.get(ID));
+						 }
+						 else 
+						 {
+							 System.out.print("Data not matched");
+						 }
+					 }
+					 else {
+						 if(option==6) 
+						 {
+							 ProjTeam obj= new ProjTeam();
+							 obj.tostring();
+						 }
+						 else 
+						 {
+							 if(option==7) 
+							 {
+								 System.exit(0);
+							 }
+						 }
+					 }
+				 }
+			 }
+		 }
+	 }
+	 }while(option!=7);
+ }
+}
+class ProjMember {
+ private int ID;
+ private String Name;
+ private String email;
+ ProjMember(){};
+ ProjMember(int ID, String Name, String email)
+ {
+	 this.ID=ID;
+	 this.Name=Name;
+	 this.email=email;
+ }
+public String getName() {
+	    return Name;
+	  }
+
+public void setName(String newName) {
+	    this.Name = newName;
+	  }
+public int getID() {
+    return ID;
+  }
+
+public void setID(int newID) {
+    this.ID = newID;
+  }
+public String getemail() {
+    return email;
+  }
+
+public void setemail(String newemail) {
+    this.email = newemail;
+  }
+}
+class ProjTeam {
+ private String TeamName;
+ ArrayList<ProjMember> member=new ArrayList<>();
+ ProjTeam(){};
+ ProjTeam(String name)
+ {
+	 this.TeamName=name;
+ }
+ public String getName() {
+	    return TeamName;
+	  }
+
+public void setName(String newName) {
+	    this.TeamName = newName;
+	  }
+public void tostring() {
+	for (int i = 0; i < member.size(); i++) {
+        System.out.println(member.get(i) + " ");
+    }
+}
+}
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Question3 {
+ public static void main(String[] argv) throws IOException{
+	 BufferedReader br = new BufferedReader(new FileReader("E:\\Task2\\src\\data.txt"));
+	    String line = null;
+
+	    while ((line = br.readLine()) != null) {
+	      String[] values = line.split(",");
+	      if(values[0]=="C") 
+	      {
+	    	  String[] C= values; 
+	    	  Cuboid obj= new Cuboid(Double.parseDouble(C[1]),Double.parseDouble(C[2]),Double.parseDouble(C[3]));
+	    	  Rectangle obj1 = new Rectangle(Double.parseDouble(C[1]),Double.parseDouble(C[2]));
+	    	  obj.tostring();
+	    	  obj1.tostring();
+	      }
+	      else 
+	      {
+	    	  if(values[0]=="P") 
+		      {
+		    	  String[] P= values; 
+		    	  Pyramid obj= new Pyramid(Double.parseDouble(P[1]),Double.parseDouble(P[2]),Double.parseDouble(P[3]));
+		    	  Rectangle obj1 = new Rectangle(Double.parseDouble(P[1]),Double.parseDouble(P[2]));
+		    	  obj.tostring();
+		      }
+	    	  else {
+	    		  if(values[0]=="R") 
+	    	      {
+	    	    	  String[] R= values; 
+	    	    	  Rectangle obj = new Rectangle(Double.parseDouble(R[1]),Double.parseDouble(R[2]));
+	    	    	  obj.tostring();
+	    	      }
+	    	  }
+	      }
+	      for (String str : values) {
+	        System.out.println(str);
+	      }
+	    }
+	    br.close();
+	 Scanner myObj = new Scanner(System.in);
+	 int option=0;
+	 do {
+	 System.out.println("WELCOME TO MAIN MENU");
+	 System.out.println("PRESS 1 TO search by length");
+	 System.out.println("PRESS 2 TO search by height");
+	 System.out.println("Press 3 to Quite");
+	 option=myObj.nextInt();
+	 if(option==1) 
+	 {
+		 double lenght;
+		 System.out.println("Enter length");
+		 lenght=myObj.nextDouble();
+		 
+	 }
+	 else 
+	 {
+		 if(option==2) 
+		 {
+			 double height;
+			 System.out.println("Enter height");
+			 height=myObj.nextDouble();
+		 }
+		 else
+		 {
+			 if(option==3) 
+			 {
+				 System.exit(0);
+			 }
+		 }
+	 }
+	 }while(option!=3);
+}
+}
+class Rectangle {
+ private double length;
+ private double width;
+ Rectangle(){};
+ Rectangle(double length, double width){
+	 this.length=length;
+	 this.width=width;
+ }
+ public double getlength() {
+	    return length;
+	  }
+
+	public void setlength(int newlength) {
+	    this.length = newlength;
+	  }
+	 public double getWidth() {
+		    return width;
+		  }
+
+		public void setwidth(int newwidth) {
+		    this.width = newwidth;
+		  }
+public double getarea() 
+{
+return length*width;	
+}
+public void tostring() 
+{
+System.out.println("Length is "+length);	
+System.out.println("Width is "+width);
+}
+}
+class Cuboid extends Rectangle{
+ private double height;
+ private double length;
+ private double width;
+ Rectangle obj;
+ Cuboid(){};
+ Cuboid (double lenght,double width,double height){
+	 this.height=height;
+	 this.length=length;
+	 this.width=width;
+ }
+ public double getheight() {
+	    return height;
+	  }
+
+	public void setheight(int newheight) {
+	    this.height = newheight;
+	  }
+	public double getlength() {
+	    return length;
+	  }
+
+	public void setlength(int newlength) {
+	    this.length = newlength;
+	  }
+	public double getwidth() {
+	    return width;
+	  }
+
+	public void setwidth(int newwidth) {
+	    this.width =newwidth;
+	  }
+public double getarea() 
+{
+return 2*getlength()*getWidth()+2*getWidth()*height+2*getlength()*height;
+}
+public double getvolume() 
+{
+	return obj.getarea()*height;
+	}
+public void tostring() 
+{
+System.out.println("surface area is "+getarea());	
+System.out.println("volume is "+getvolume());
+}
+}
+class Pyramid extends Rectangle{
+	private double height;
+	private double length;
+	private double width;
+	 Rectangle obj;
+	 Pyramid(){};
+	 Pyramid (double length,double width,double height){
+		 this.height=height;
+		 this.length=length;
+		 this.width=width;
+	 }
+	 public double getheight() {
+		    return height;
+		  }
+
+		public void setheight(int newheight) {
+		    this.height = newheight;
+		  }
+		public double getlength() {
+		    return length;
+		  }
+
+		public void setlength(int newlength) {
+		    this.length = newlength;
+		  }
+		public double getwidth() {
+		    return width;
+		  }
+
+		public void setwidth(int newwidth) {
+		    this.width =newwidth;
+		  }
+	public double getvolume() 
+	{
+		return (obj.getarea()*height/3);
+		}
+	public void tostring() 
+	{	
+	System.out.println("volume is "+getvolume());
+	}
+}
